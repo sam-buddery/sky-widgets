@@ -1,7 +1,7 @@
 {
-  "title": "Countries Vue",
-  "description": "A widget built with Vue and the Widget SDK.",
-  "category": "Demo",
+  "title": "Sam-Demo",
+  "description": "A widget built with Sky and the Widget SDK.",
+  "category": "Sky",
   "imageSrc": "thumbnail.png",
   "source": {
     "path": "dist",
