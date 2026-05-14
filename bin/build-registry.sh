@@ -216,8 +216,7 @@ for widget_dir in "$WIDGETS_DIR"/*; do
   echo "Processing widget: $widget_name"
 
   if [ ! -f "$widget_config" ]; then
-    error "  Missing widget.json in $widget_dir"
-    ((error_count++))
+    warning "  Skipping $widget_dir (no widget.json)"
     continue
   fi
 
@@ -374,7 +373,7 @@ for widget_dir in "$WIDGETS_DIR"/*; do
 
   WIDGETS_JSON=$(echo "$WIDGETS_JSON" | jq --argjson widget "$widget" '. + [$widget]')
   success "  Processed: $title"
-  ((widget_count++))
+  widget_count=$((widget_count + 1))
 done
 
 echo ""
@@ -447,7 +446,7 @@ if [ -d "$STYLESHEETS_DIR" ]; then
 
     STYLESHEETS_JSON=$(echo "$STYLESHEETS_JSON" | jq --argjson ss "$stylesheet" '. + [$ss]')
     success "  Processed: $ss_name"
-    ((stylesheet_count++))
+    stylesheet_count=$((stylesheet_count + 1))
   done
 
   if [ $error_count -gt 0 ]; then
@@ -517,7 +516,7 @@ if [ -d "$SCRIPTS_DIR" ]; then
 
     SCRIPTS_JSON=$(echo "$SCRIPTS_JSON" | jq --argjson sc "$script" '. + [$sc]')
     success "  Processed: $sc_name"
-    ((script_count++))
+    script_count=$((script_count + 1))
   done
 
   if [ $error_count -gt 0 ]; then
@@ -635,7 +634,7 @@ for widget_dir in "$WIDGETS_DIR"/*; do
 
     CONNECTORS_JSON=$(echo "$CONNECTORS_JSON" | jq --argjson connector "$c" '. + [$connector]')
     success "  Processed connector: $c_name ($c_permalink)"
-    ((connector_count++))
+    connector_count=$((connector_count + 1))
   done
 done
 

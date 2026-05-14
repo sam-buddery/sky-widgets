@@ -169,6 +169,54 @@
         "description": "A widget built with Vue and the Widget SDK."
       },
       "type": "countries-vue"
+    },
+    {
+      "title": "Sam Sky",
+      "description": "An animated sky scene with configurable greeting text.",
+      "category": "Sky",
+      "imageSrc": "widgets/sam-sky/thumbnail.png",
+      "source": {
+        "path": "widgets/sam-sky/dist",
+        "entry": "content.html"
+      },
+      "configuration": {
+        "properties": [
+          {
+            "name": "greeting_title",
+            "type": "text",
+            "label": "Heading",
+            "description": "Main heading shown over the sky scene.",
+            "defaultValue": "Welcome to the Community",
+            "rules": {
+              "required": true,
+              "maxLength": 80
+            }
+          },
+          {
+            "name": "greeting_subtitle",
+            "type": "text",
+            "label": "Subtext",
+            "description": "Smaller text below the heading.",
+            "defaultValue": "The sky is the limit.",
+            "rules": {
+              "maxLength": 160
+            }
+          },
+          {
+            "name": "sky_mode",
+            "type": "text",
+            "label": "Sky Mode",
+            "description": "Either 'day' or 'night' — controls the gradient and accent color.",
+            "defaultValue": "day"
+          }
+        ]
+      },
+      "defaultConfig": {
+        "greeting_title": "Welcome to the Community",
+        "greeting_subtitle": "The sky is the limit.",
+        "sky_mode": "day"
+      },
+      "type": "sam-sky"
     }
   ],
   "stylesheets": [

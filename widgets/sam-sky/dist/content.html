@@ -1,0 +1,149 @@
+<style>
+  .sky-widget {
+    position: relative;
+    font-family: var(--config--main-font-family, system-ui, sans-serif);
+    color: var(--config--main-color-text, #1f2a44);
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+    background: linear-gradient(180deg, #87ceeb 0%, #b6e0f4 55%, #f6f1d8 100%);
+    transition: background 0.6s ease;
+  }
+  .sky-widget--night {
+    background: linear-gradient(180deg, #0b1a3a 0%, #1c2c55 55%, #2b1a4a 100%);
+    color: #f3f0e7;
+  }
+
+  .sky-widget__scene {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .sky-widget__orb {
+    position: absolute;
+    top: 18%;
+    right: 14%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff6c5, #ffd86b 55%, #ffae3b 100%);
+    box-shadow: 0 0 60px 12px rgba(255, 216, 107, 0.55);
+    transition: background 0.6s ease, box-shadow 0.6s ease, transform 0.6s ease;
+  }
+  .sky-widget--night .sky-widget__orb {
+    background: radial-gradient(circle at 38% 38%, #fefbe9, #e7e2c5 55%, #b8b292 100%);
+    box-shadow: 0 0 50px 6px rgba(238, 232, 200, 0.35);
+  }
+
+  .sky-widget__cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50px;
+    filter: blur(0.5px);
+    animation: drift linear infinite;
+  }
+  .sky-widget--night .sky-widget__cloud { background: rgba(255, 255, 255, 0.12); }
+
+  .sky-widget__cloud::before,
+  .sky-widget__cloud::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+  .sky-widget__cloud--1 {
+    width: 120px; height: 28px; top: 22%; left: -130px;
+    animation-duration: 38s;
+  }
+  .sky-widget__cloud--1::before { width: 50px; height: 50px; top: -22px; left: 18px; }
+  .sky-widget__cloud--1::after  { width: 36px; height: 36px; top: -14px; left: 64px; }
+
+  .sky-widget__cloud--2 {
+    width: 90px; height: 22px; top: 55%; left: -110px;
+    animation-duration: 52s; animation-delay: -12s;
+  }
+  .sky-widget__cloud--2::before { width: 40px; height: 40px; top: -18px; left: 14px; }
+  .sky-widget__cloud--2::after  { width: 28px; height: 28px; top: -10px; left: 48px; }
+
+  .sky-widget__cloud--3 {
+    width: 70px; height: 18px; top: 38%; left: -90px;
+    animation-duration: 64s; animation-delay: -28s;
+  }
+  .sky-widget__cloud--3::before { width: 32px; height: 32px; top: -14px; left: 10px; }
+  .sky-widget__cloud--3::after  { width: 24px; height: 24px; top: -8px; left: 38px; }
+
+  @keyframes drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(100% + 110vw)); }
+  }
+
+  .sky-widget__stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    background-image:
+      radial-gradient(1px 1px at 10% 18%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 22% 9%, #fff, transparent 50%),
+      radial-gradient(1.5px 1.5px at 35% 30%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 50% 14%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 65% 25%, #fff, transparent 50%),
+      radial-gradient(1.5px 1.5px at 78% 12%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 88% 28%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 15% 40%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 42% 48%, #fff, transparent 50%),
+      radial-gradient(1px 1px at 70% 45%, #fff, transparent 50%);
+  }
+  .sky-widget--night .sky-widget__stars { opacity: 1; animation: twinkle 4s ease-in-out infinite; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.85; }
+    50%      { opacity: 1; }
+  }
+
+  .sky-widget__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 36px 28px;
+    max-width: 90%;
+  }
+  .sky-widget__title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--config--main-color-brand, currentColor);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.12);
+    letter-spacing: -0.01em;
+  }
+  .sky-widget--night .sky-widget__title {
+    color: var(--config--main-color-brand, #ffd86b);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+  }
+  .sky-widget__subtitle {
+    font-size: 15px;
+    margin: 0;
+    opacity: 0.85;
+    font-style: italic;
+  }
+</style>
+
+<div class="sky-widget" id="skyWidget">
+  <div class="sky-widget__scene" aria-hidden="true">
+    <div class="sky-widget__stars"></div>
+    <div class="sky-widget__orb"></div>
+    <div class="sky-widget__cloud sky-widget__cloud--1"></div>
+    <div class="sky-widget__cloud sky-widget__cloud--2"></div>
+    <div class="sky-widget__cloud sky-widget__cloud--3"></div>
+  </div>
+  <div class="sky-widget__content">
+    <h2 class="sky-widget__title">Welcome to the Community</h2>
+    <p class="sky-widget__subtitle">The sky is the limit.</p>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
