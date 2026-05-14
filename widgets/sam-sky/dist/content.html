@@ -5,7 +5,7 @@
     color: var(--config--main-color-text, #1f2a44);
     border-radius: 14px;
     overflow: hidden;
-    min-height: 280px;
+    min-height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,7 +48,6 @@
     animation: drift linear infinite;
   }
   .sky-widget--night .sky-widget__cloud { background: rgba(255, 255, 255, 0.12); }
-
   .sky-widget__cloud::before,
   .sky-widget__cloud::after {
     content: "";
@@ -62,21 +61,18 @@
   }
   .sky-widget__cloud--1::before { width: 50px; height: 50px; top: -22px; left: 18px; }
   .sky-widget__cloud--1::after  { width: 36px; height: 36px; top: -14px; left: 64px; }
-
   .sky-widget__cloud--2 {
-    width: 90px; height: 22px; top: 55%; left: -110px;
+    width: 90px; height: 22px; top: 58%; left: -110px;
     animation-duration: 52s; animation-delay: -12s;
   }
   .sky-widget__cloud--2::before { width: 40px; height: 40px; top: -18px; left: 14px; }
   .sky-widget__cloud--2::after  { width: 28px; height: 28px; top: -10px; left: 48px; }
-
   .sky-widget__cloud--3 {
-    width: 70px; height: 18px; top: 38%; left: -90px;
+    width: 70px; height: 18px; top: 40%; left: -90px;
     animation-duration: 64s; animation-delay: -28s;
   }
   .sky-widget__cloud--3::before { width: 32px; height: 32px; top: -14px; left: 10px; }
   .sky-widget__cloud--3::after  { width: 24px; height: 24px; top: -8px; left: 38px; }
-
   @keyframes drift {
     from { transform: translateX(0); }
     to   { transform: translateX(calc(100% + 110vw)); }
@@ -112,6 +108,44 @@
     padding: 36px 28px;
     max-width: 90%;
   }
+
+  .sky-widget__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    margin-bottom: 14px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, #ffb84d, #ffd86b 50%, #ffb84d);
+    background-size: 200% 100%;
+    color: #2b1a04;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 4px 14px rgba(255, 180, 77, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    animation: shimmer 4s linear infinite;
+  }
+  .sky-widget--night .sky-widget__badge {
+    background: linear-gradient(120deg, #6fb6ff, #c8e2ff 50%, #6fb6ff);
+    background-size: 200% 100%;
+    color: #0b1a3a;
+    box-shadow:
+      0 4px 14px rgba(111, 182, 255, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+  .sky-widget__badge-star {
+    font-size: 13px;
+    line-height: 1;
+  }
+  @keyframes shimmer {
+    from { background-position: 0% 0; }
+    to   { background-position: 200% 0; }
+  }
+
   .sky-widget__title {
     font-size: 28px;
     font-weight: 700;
@@ -126,10 +160,37 @@
   }
   .sky-widget__subtitle {
     font-size: 15px;
-    margin: 0;
-    opacity: 0.85;
+    margin: 0 0 18px;
+    opacity: 0.88;
     font-style: italic;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.55;
   }
+  .sky-widget__cta {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: var(--config--main-color-brand, #0072c9);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 6px 18px rgba(0, 114, 201, 0.35);
+  }
+  .sky-widget--night .sky-widget__cta {
+    background: var(--config--main-color-brand, #ffd86b);
+    color: #1a1305;
+    box-shadow: 0 6px 18px rgba(255, 216, 107, 0.35);
+  }
+  .sky-widget__cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 22px rgba(0, 114, 201, 0.45);
+  }
+  .sky-widget__cta.is-hidden { display: none; }
 </style>
 
 <div class="sky-widget" id="skyWidget">
@@ -141,8 +202,13 @@
     <div class="sky-widget__cloud sky-widget__cloud--3"></div>
   </div>
   <div class="sky-widget__content">
-    <h2 class="sky-widget__title">Welcome to the Community</h2>
-    <p class="sky-widget__subtitle">The sky is the limit.</p>
+    <span class="sky-widget__badge">
+      <span class="sky-widget__badge-star" aria-hidden="true">&#9733;</span>
+      <span class="sky-widget__badge-text">SUPERUSER</span>
+    </span>
+    <h2 class="sky-widget__title">Welcome to the Superusers Lounge</h2>
+    <p class="sky-widget__subtitle">Thank you for sharing your knowledge and supporting fellow members of the Sky Community.</p>
+    <a class="sky-widget__cta" href="https://helpforum.sky.com/t5/Superuser-Lounge/ct-p/superusers" rel="noopener noreferrer" target="_blank">Visit the Lounge</a>
   </div>
 </div>
 

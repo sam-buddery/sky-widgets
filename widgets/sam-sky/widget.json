@@ -1,6 +1,6 @@
 {
   "title": "Sam Sky",
-  "description": "An animated sky scene with configurable greeting text.",
+  "description": "A welcome card for Sky Community Superusers \u2014 animated sky scene with a Superuser badge, recognition message, and optional CTA.",
   "category": "Sky",
   "imageSrc": "thumbnail.png",
   "source": {
@@ -10,11 +10,22 @@
   "configuration": {
     "properties": [
       {
+        "name": "badge_text",
+        "type": "text",
+        "label": "Badge",
+        "description": "Pill label shown above the heading. Try 'SUPERUSER' or 'SUPERUSER+'.",
+        "defaultValue": "SUPERUSER",
+        "rules": {
+          "required": true,
+          "maxLength": 20
+        }
+      },
+      {
         "name": "greeting_title",
         "type": "text",
         "label": "Heading",
-        "description": "Main heading shown over the sky scene.",
-        "defaultValue": "Welcome to the Community",
+        "description": "Main heading over the sky scene.",
+        "defaultValue": "Welcome to the Superusers Lounge",
         "rules": {
           "required": true,
           "maxLength": 80
@@ -24,11 +35,28 @@
         "name": "greeting_subtitle",
         "type": "text",
         "label": "Subtext",
-        "description": "Smaller text below the heading.",
-        "defaultValue": "The sky is the limit.",
+        "description": "Recognition message shown below the heading.",
+        "defaultValue": "Thank you for sharing your knowledge and supporting fellow members of the Sky Community.",
         "rules": {
-          "maxLength": 160
+          "maxLength": 200
         }
+      },
+      {
+        "name": "cta_label",
+        "type": "text",
+        "label": "CTA Label",
+        "description": "Button text. Leave blank to hide the button.",
+        "defaultValue": "Visit the Lounge",
+        "rules": {
+          "maxLength": 30
+        }
+      },
+      {
+        "name": "cta_url",
+        "type": "text",
+        "label": "CTA URL",
+        "description": "Where the button links to. Leave blank to hide the button.",
+        "defaultValue": "https://helpforum.sky.com/t5/Superuser-Lounge/ct-p/superusers"
       },
       {
         "name": "sky_mode",
@@ -40,8 +68,11 @@
     ]
   },
   "defaultConfig": {
-    "greeting_title": "Welcome to the Community",
-    "greeting_subtitle": "The sky is the limit.",
+    "badge_text": "SUPERUSER",
+    "greeting_title": "Welcome to the Superusers Lounge",
+    "greeting_subtitle": "Thank you for sharing your knowledge and supporting fellow members of the Sky Community.",
+    "cta_label": "Visit the Lounge",
+    "cta_url": "https://helpforum.sky.com/t5/Superuser-Lounge/ct-p/superusers",
     "sky_mode": "day"
   }
 }
