@@ -1,1 +1,409 @@
-<script type="module" src="/src/main.ts"></script>
+<style>
+  .dragon-roster {
+    font-family: var(--config--main-font-family, 'Inter', system-ui, sans-serif);
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--config--main-color-background, linear-gradient(135deg, #1a0b1f 0%, #2d0f0a 100%));
+    border: 1px solid var(--config--main-color-border, #3a1f12);
+    color: var(--config--main-color-text, #f4e4c1);
+    position: relative;
+    overflow: hidden;
+  }
+  .dragon-roster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255, 140, 0, 0.08), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(220, 20, 60, 0.06), transparent 40%);
+    pointer-events: none;
+  }
+  .dragon-roster__header {
+    text-align: center;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .dragon-roster__title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: 0.05em;
+    color: var(--config--main-color-brand, #e0a96d);
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(224, 169, 109, 0.4);
+  }
+  .dragon-roster__subtitle {
+    font-size: 13px;
+    opacity: 0.7;
+    margin: 0;
+    font-style: italic;
+  }
+  .dragon-roster__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 14px;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 4px 14px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--config--main-color-brand, #e0a96d) transparent;
+  }
+  .dragon-roster__grid::-webkit-scrollbar {
+    height: 8px;
+  }
+  .dragon-roster__grid::-webkit-scrollbar-track {
+    background: rgba(224, 169, 109, 0.08);
+    border-radius: 4px;
+  }
+  .dragon-roster__grid::-webkit-scrollbar-thumb {
+    background: var(--config--main-color-brand, #e0a96d);
+    border-radius: 4px;
+    opacity: 0.6;
+  }
+  .dragon-card {
+    position: relative;
+    flex: 0 0 200px;
+    height: 260px;
+    perspective: 1200px;
+    cursor: pointer;
+    scroll-snap-align: start;
+  }
+  .dragon-card__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+  .dragon-card.is-flipped .dragon-card__inner {
+    transform: rotateY(180deg);
+  }
+  .dragon-card__face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(224, 169, 109, 0.25);
+    background: linear-gradient(160deg, rgba(40, 18, 10, 0.95) 0%, rgba(20, 8, 16, 0.95) 100%);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 200, 150, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .dragon-card:hover .dragon-card__face {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 200, 150, 0.15);
+  }
+  .dragon-card:hover:not(.is-flipped) .dragon-card__inner {
+    transform: translateY(-4px);
+  }
+  .dragon-card__face--back {
+    transform: rotateY(180deg);
+    justify-content: space-between;
+  }
+  .dragon-card__svg {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .dragon-card__svg svg {
+    width: 100%;
+    height: 100%;
+    max-height: 130px;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+  }
+  .dragon-card__name {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--config--main-color-brand, #e0a96d);
+    margin: 0 0 4px;
+    letter-spacing: 0.04em;
+  }
+  .dragon-card__tag {
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+    margin: 0;
+  }
+  .dragon-card__hint {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.4;
+    letter-spacing: 0.1em;
+  }
+  .dragon-card__stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(224, 169, 109, 0.12);
+    font-size: 13px;
+  }
+  .dragon-card__stat:last-of-type {
+    border-bottom: none;
+  }
+  .dragon-card__stat-label {
+    opacity: 0.6;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    align-self: center;
+  }
+  .dragon-card__stat-value {
+    font-weight: 600;
+    text-align: right;
+  }
+  .dragon-card__back-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--config--main-color-brand, #e0a96d);
+    text-align: center;
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(224, 169, 109, 0.2);
+  }
+  .dragon-card__lore {
+    font-size: 11px;
+    line-height: 1.5;
+    opacity: 0.8;
+    font-style: italic;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .dragon-roster__footer {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 11px;
+    opacity: 0.45;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  @media (max-width: 480px) {
+    .dragon-card { flex: 0 0 170px; height: 240px; }
+    .dragon-card__name { font-size: 15px; }
+  }
+</style>
+
+<div class="dragon-roster" id="dragonRoster">
+  <div class="dragon-roster__header">
+    <h2 class="dragon-roster__title">The Dragon Roster</h2>
+    <p class="dragon-roster__subtitle">Click a card to reveal the rider and fate</p>
+  </div>
+
+  <div class="dragon-roster__grid" id="dragonGrid"></div>
+
+  <div class="dragon-roster__footer">Fire &amp; Blood &middot; A House of the Dragon Tribute</div>
+</div>
+
+<script>
+  (function () {
+    const dragons = [
+      {
+        name: "Vhagar",
+        tag: "The Ancient",
+        color: "#7d8a4a",
+        accent: "#c4b572",
+        rider: "Aemond Targaryen",
+        era: "Conquest Era",
+        size: "Largest Living",
+        fate: "Fell at the Gullet",
+        lore: "Once mount of Visenya the Conqueror. Centuries of fire have hardened her scales to iron."
+      },
+      {
+        name: "Caraxes",
+        tag: "Blood Wyrm",
+        color: "#8b1a1a",
+        accent: "#d94545",
+        rider: "Daemon Targaryen",
+        era: "Stepstones War",
+        size: "Lean & Lethal",
+        fate: "Drowned at the Eye",
+        lore: "A coiled serpent of crimson scale. Slender, swift, and as cruel as the rider who claimed him."
+      },
+      {
+        name: "Syrax",
+        tag: "The Gilded",
+        color: "#d4a017",
+        accent: "#f5d76e",
+        rider: "Rhaenyra Targaryen",
+        era: "Dance of Dragons",
+        size: "Well-fed Beauty",
+        fate: "Slain in King's Landing",
+        lore: "A golden she-dragon kept in the Dragonpit. Spoiled, mighty, and never far from her queen."
+      },
+      {
+        name: "Meleys",
+        tag: "Red Queen",
+        color: "#a52a2a",
+        accent: "#ff6b6b",
+        rider: "Rhaenys Targaryen",
+        era: "Rook's Rest",
+        size: "Swift Crimson",
+        fate: "Fell at Rook's Rest",
+        lore: "Rose-pink wings and copper scales. Faster than most, fiercer than any."
+      },
+      {
+        name: "Seasmoke",
+        tag: "The Pale",
+        color: "#c8d6e5",
+        accent: "#a4b0be",
+        rider: "Addam of Hull",
+        era: "Dance of Dragons",
+        size: "Silver-Grey",
+        fate: "Lost in the Riverlands",
+        lore: "Once Laenor's mount. The pale grey drake chose a new rider when the realm split in two."
+      },
+      {
+        name: "Sunfyre",
+        tag: "The Golden",
+        color: "#f1c40f",
+        accent: "#ffe66d",
+        rider: "Aegon II Targaryen",
+        era: "Dance of Dragons",
+        size: "Smaller, Splendid",
+        fate: "Mortally Wounded",
+        lore: "Said to be the most magnificent dragon ever to take wing. His scales shone like beaten gold."
+      },
+      {
+        name: "Vermithor",
+        tag: "Bronze Fury",
+        color: "#cd7f32",
+        accent: "#f4a460",
+        rider: "Hugh Hammer",
+        era: "Dance of Dragons",
+        size: "Second-Largest",
+        fate: "Fell at the Lakeshore",
+        lore: "The old king Jaehaerys's mount. Slumbered beneath Dragonstone until war stirred him."
+      },
+      {
+        name: "Silverwing",
+        tag: "The Gentle",
+        color: "#dcdcdc",
+        accent: "#f5f5f5",
+        rider: "Ulf the White",
+        era: "Dance of Dragons",
+        size: "Graceful",
+        fate: "Survived the Dance",
+        lore: "Good Queen Alysanne's mount. Of all the great dragons, she was the slowest to anger."
+      }
+    ];
+
+    function dragonSVG(color, accent) {
+      // Original stylized dragon silhouette — wings spread, neck arched
+      return `
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="body-${color.replace('#','')}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="${accent}" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="${color}" stop-opacity="1"/>
+            </linearGradient>
+            <linearGradient id="wing-${color.replace('#','')}" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="${color}" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="${color}" stop-opacity="0.35"/>
+            </linearGradient>
+          </defs>
+          <!-- Left wing -->
+          <path d="M 95 65 Q 50 25, 10 30 Q 30 55, 40 70 Q 55 80, 95 75 Z"
+                fill="url(#wing-${color.replace('#','')})" stroke="${color}" stroke-width="1.2" opacity="0.92"/>
+          <!-- Right wing -->
+          <path d="M 105 65 Q 150 25, 190 30 Q 170 55, 160 70 Q 145 80, 105 75 Z"
+                fill="url(#wing-${color.replace('#','')})" stroke="${color}" stroke-width="1.2" opacity="0.92"/>
+          <!-- Wing finger lines -->
+          <path d="M 95 70 Q 60 35, 15 32" fill="none" stroke="${color}" stroke-width="0.8" opacity="0.6"/>
+          <path d="M 95 72 Q 65 50, 35 60" fill="none" stroke="${color}" stroke-width="0.8" opacity="0.6"/>
+          <path d="M 105 70 Q 140 35, 185 32" fill="none" stroke="${color}" stroke-width="0.8" opacity="0.6"/>
+          <path d="M 105 72 Q 135 50, 165 60" fill="none" stroke="${color}" stroke-width="0.8" opacity="0.6"/>
+          <!-- Body -->
+          <ellipse cx="100" cy="72" rx="22" ry="11" fill="url(#body-${color.replace('#','')})" stroke="${color}" stroke-width="1"/>
+          <!-- Neck arching up -->
+          <path d="M 100 65 Q 102 45, 115 35 Q 122 30, 128 28"
+                fill="none" stroke="${color}" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 100 65 Q 102 45, 115 35 Q 122 30, 128 28"
+                fill="none" stroke="${accent}" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+          <!-- Head -->
+          <path d="M 125 26 Q 138 22, 144 28 Q 142 34, 138 36 Q 132 37, 126 34 Q 122 30, 125 26 Z"
+                fill="url(#body-${color.replace('#','')})" stroke="${color}" stroke-width="1"/>
+          <!-- Horns -->
+          <path d="M 132 24 L 134 16 M 138 25 L 142 18" stroke="${color}" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Eye -->
+          <circle cx="135" cy="29" r="1.2" fill="#fff8dc"/>
+          <!-- Tail -->
+          <path d="M 100 75 Q 80 90, 55 95 Q 40 96, 30 100"
+                fill="none" stroke="${color}" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 100 75 Q 80 90, 55 95 Q 40 96, 30 100"
+                fill="none" stroke="${accent}" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+          <!-- Tail spike -->
+          <path d="M 30 100 L 22 96 L 28 103 Z" fill="${color}"/>
+          <!-- Legs -->
+          <path d="M 90 82 L 86 95 M 95 84 L 94 97" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 108 84 L 109 97 M 113 82 L 117 95" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `;
+    }
+
+    function buildCard(d) {
+      const card = document.createElement('div');
+      card.className = 'dragon-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${d.name}, click to reveal details`);
+      card.innerHTML = `
+        <div class="dragon-card__inner">
+          <div class="dragon-card__face dragon-card__face--front">
+            <div class="dragon-card__svg">${dragonSVG(d.color, d.accent)}</div>
+            <h3 class="dragon-card__name">${d.name}</h3>
+            <p class="dragon-card__tag">${d.tag}</p>
+            <span class="dragon-card__hint">CLICK</span>
+          </div>
+          <div class="dragon-card__face dragon-card__face--back">
+            <div>
+              <h4 class="dragon-card__back-title">${d.name}</h4>
+              <div class="dragon-card__stat">
+                <span class="dragon-card__stat-label">Rider</span>
+                <span class="dragon-card__stat-value">${d.rider}</span>
+              </div>
+              <div class="dragon-card__stat">
+                <span class="dragon-card__stat-label">Era</span>
+                <span class="dragon-card__stat-value">${d.era}</span>
+              </div>
+              <div class="dragon-card__stat">
+                <span class="dragon-card__stat-label">Size</span>
+                <span class="dragon-card__stat-value">${d.size}</span>
+              </div>
+              <div class="dragon-card__stat">
+                <span class="dragon-card__stat-label">Fate</span>
+                <span class="dragon-card__stat-value">${d.fate}</span>
+              </div>
+            </div>
+            <p class="dragon-card__lore">"${d.lore}"</p>
+          </div>
+        </div>
+      `;
+
+      const toggle = () => card.classList.toggle('is-flipped');
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
+      });
+      return card;
+    }
+
+    const grid = document.getElementById('dragonGrid');
+    if (grid) {
+      dragons.forEach(d => grid.appendChild(buildCard(d)));
+    }
+  })();
+</script>
