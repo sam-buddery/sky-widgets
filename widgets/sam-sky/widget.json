@@ -10,16 +10,6 @@
   "configuration": {
     "properties": [
       {
-        "name": "level",
-        "type": "text",
-        "label": "Level",
-        "description": "Number shown in the gold medallion. Leave blank to hide it.",
-        "defaultValue": "10",
-        "rules": {
-          "maxLength": 3
-        }
-      },
-      {
         "name": "badge_text",
         "type": "text",
         "label": "Badge",
@@ -78,7 +68,6 @@
     ]
   },
   "defaultConfig": {
-    "level": "10",
     "badge_text": "SUPERUSER",
     "greeting_title": "Welcome to the Sky Superusers Lounge",
     "greeting_subtitle": "Thank you for sharing your knowledge and supporting fellow members of the Sky Community.",

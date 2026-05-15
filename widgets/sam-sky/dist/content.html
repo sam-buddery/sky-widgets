@@ -163,70 +163,6 @@
     max-width: 90%;
   }
 
-  .sky-widget__progress {
-    margin: 0 auto 20px;
-    max-width: 320px;
-    text-align: left;
-  }
-  .sky-widget__progress.is-hidden { display: none; }
-  .sky-widget__progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 7px;
-    opacity: 0.85;
-  }
-  .sky-widget__progress-label {
-    color: currentColor;
-  }
-  .sky-widget__progress-fraction {
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.1em;
-  }
-  .sky-widget__progress-track {
-    display: flex;
-    gap: 4px;
-    padding: 4px;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
-  .sky-widget--night .sky-widget__progress-track {
-    background: rgba(0, 0, 0, 0.35);
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-  .sky-widget__progress-seg {
-    flex: 1;
-    height: 14px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.15);
-    transition: background 0.35s ease, box-shadow 0.35s ease;
-  }
-  .sky-widget__progress-seg.is-filled {
-    background: linear-gradient(180deg, #ffe89a 0%, #ffc94a 50%, #e09a1f 100%);
-    box-shadow:
-      0 0 6px rgba(255, 200, 80, 0.7),
-      inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  }
-  .sky-widget--night .sky-widget__progress-seg.is-filled {
-    background: linear-gradient(180deg, #d0e7ff 0%, #6fb6ff 50%, #2a6bb8 100%);
-    box-shadow:
-      0 0 6px rgba(111, 182, 255, 0.7),
-      inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  }
-  .sky-widget__progress-seg.is-max {
-    animation: segGlow 2.4s ease-in-out infinite;
-  }
-  @keyframes segGlow {
-    0%, 100% { filter: brightness(1); }
-    50%      { filter: brightness(1.18); }
-  }
-
   .sky-widget__badge {
     display: inline-flex;
     align-items: center;
@@ -335,24 +271,6 @@
     </span>
     <h2 class="sky-widget__title">Welcome to the Sky Superusers Lounge</h2>
     <p class="sky-widget__subtitle">Thank you for sharing your knowledge and supporting fellow members of the Sky Community.</p>
-    <div class="sky-widget__progress" role="img" aria-label="Level 10 of 10">
-      <div class="sky-widget__progress-header">
-        <span class="sky-widget__progress-label">Level <span class="sky-widget__progress-current">10</span></span>
-        <span class="sky-widget__progress-fraction"><span class="sky-widget__progress-current-2">10</span> / 10</span>
-      </div>
-      <div class="sky-widget__progress-track" aria-hidden="true">
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-        <span class="sky-widget__progress-seg is-filled is-max"></span>
-      </div>
-    </div>
     <a class="sky-widget__cta" href="https://sky-en-community.insided.com/p/superuser-lounge" rel="noopener noreferrer" target="_blank">Visit the Lounge</a>
   </div>
 </div>
