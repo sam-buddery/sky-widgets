@@ -5,13 +5,67 @@
     color: var(--config--main-color-text, #1f2a44);
     border-radius: 14px;
     overflow: hidden;
-    min-height: 320px;
+    min-height: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
     isolation: isolate;
     background: linear-gradient(180deg, #87ceeb 0%, #b6e0f4 55%, #f6f1d8 100%);
     transition: background 0.6s ease;
+  }
+
+  /* Sky-inspired brand header */
+  .sky-widget__brand {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .sky-widget--night .sky-widget__brand {
+    background: rgba(11, 26, 58, 0.7);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .sky-widget__brand-mark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #0072c9;
+    font-size: 18px;
+  }
+  .sky-widget--night .sky-widget__brand-mark { color: #6fb6ff; }
+  .sky-widget__brand-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .sky-widget--night .sky-widget__brand-tag { color: rgba(255, 255, 255, 0.65); }
+  .sky-widget__brand-stripe {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      #ff7e3d 0%,
+      #ff4d8b 25%,
+      #c64bff 55%,
+      #4a78ff 85%,
+      #00a0e2 100%
+    );
   }
   .sky-widget--night {
     background: linear-gradient(180deg, #0b1a3a 0%, #1c2c55 55%, #2b1a4a 100%);
@@ -105,7 +159,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 36px 28px;
+    padding: 64px 28px 36px;
     max-width: 90%;
   }
 
@@ -180,26 +234,30 @@
     padding: 6px 14px;
     margin-bottom: 14px;
     border-radius: 999px;
-    background: linear-gradient(120deg, #ffb84d, #ffd86b 50%, #ffb84d);
+    background: linear-gradient(
+      120deg,
+      #ff7e3d 0%,
+      #ff4d8b 30%,
+      #c64bff 60%,
+      #4a78ff 100%
+    );
     background-size: 200% 100%;
-    color: #2b1a04;
+    color: #ffffff;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow:
-      0 4px 14px rgba(255, 180, 77, 0.45),
-      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      0 4px 14px rgba(198, 75, 255, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
     animation: shimmer 4s linear infinite;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   }
   .sky-widget--night .sky-widget__badge {
-    background: linear-gradient(120deg, #6fb6ff, #c8e2ff 50%, #6fb6ff);
-    background-size: 200% 100%;
-    color: #0b1a3a;
     box-shadow:
-      0 4px 14px rgba(111, 182, 255, 0.55),
-      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      0 4px 18px rgba(198, 75, 255, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
   .sky-widget__badge-star {
     font-size: 13px;
@@ -234,21 +292,21 @@
   }
   .sky-widget__cta {
     display: inline-block;
-    padding: 10px 22px;
+    padding: 11px 24px;
     border-radius: 999px;
     background: var(--config--main-color-brand, #0072c9);
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     text-decoration: none;
     letter-spacing: 0.02em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-    box-shadow: 0 6px 18px rgba(0, 114, 201, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    box-shadow: 0 6px 18px rgba(0, 114, 201, 0.4);
   }
   .sky-widget--night .sky-widget__cta {
-    background: var(--config--main-color-brand, #ffd86b);
-    color: #1a1305;
-    box-shadow: 0 6px 18px rgba(255, 216, 107, 0.35);
+    background: var(--config--main-color-brand, #00a0e2);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 160, 226, 0.45);
   }
   .sky-widget__cta:hover {
     transform: translateY(-1px);
@@ -258,6 +316,11 @@
 </style>
 
 <div class="sky-widget" id="skyWidget">
+  <div class="sky-widget__brand" aria-hidden="true">
+    <span class="sky-widget__brand-mark">sky</span>
+    <span class="sky-widget__brand-tag">Community</span>
+    <span class="sky-widget__brand-stripe"></span>
+  </div>
   <div class="sky-widget__scene" aria-hidden="true">
     <div class="sky-widget__stars"></div>
     <div class="sky-widget__orb"></div>
