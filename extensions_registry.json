@@ -207,7 +207,7 @@
             "type": "text",
             "label": "Heading",
             "description": "Main heading over the sky scene.",
-            "defaultValue": "Welcome Sky Super User",
+            "defaultValue": "Welcome to the Sky Superusers Lounge",
             "rules": {
               "required": true,
               "maxLength": 80
@@ -252,7 +252,7 @@
       "defaultConfig": {
         "level": "10",
         "badge_text": "SUPERUSER",
-        "greeting_title": "Welcome Sky Super User",
+        "greeting_title": "Welcome to the Sky Superusers Lounge",
         "greeting_subtitle": "Thank you for sharing your knowledge and supporting fellow members of the Sky Community.",
         "cta_label": "Visit the Lounge",
         "cta_url": "https://sky-en-community.insided.com/p/superuser-lounge",
