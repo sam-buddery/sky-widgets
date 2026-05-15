@@ -1,0 +1,149 @@
+{
+  "title": "A/B Test Container",
+  "description": "Generic A/B test widget. Randomly shows Variant A or Variant B to each visitor, with full independent content per variant and console-only tracking events.",
+  "category": "Experiments",
+  "source": {
+    "path": "dist",
+    "entry": "content.html"
+  },
+  "configuration": {
+    "properties": [
+      {
+        "name": "experiment_name",
+        "type": "text",
+        "label": "Experiment Name",
+        "description": "Short identifier used in console tracking events (e.g., 'homepage_hero_q2').",
+        "defaultValue": "untitled_experiment",
+        "rules": {
+          "required": true,
+          "maxLength": 60
+        }
+      },
+      {
+        "name": "split_percent_a",
+        "type": "text",
+        "label": "% Traffic to Variant A",
+        "description": "Whole number 0\u2013100. The remainder goes to Variant B. Default 50 = 50/50.",
+        "defaultValue": "50",
+        "rules": {
+          "maxLength": 3
+        }
+      },
+      {
+        "name": "persist_assignment",
+        "type": "text",
+        "label": "Persist Assignment",
+        "description": "How long a visitor stays in their assigned variant: 'session' (until tab closes), 'permanent' (across visits), or 'none' (re-assign every render).",
+        "defaultValue": "session",
+        "rules": {
+          "maxLength": 12
+        }
+      },
+      {
+        "name": "force_variant",
+        "type": "text",
+        "label": "Force Variant (debug)",
+        "description": "For testing only. Set to 'a' or 'b' to override assignment. Leave blank for normal split.",
+        "defaultValue": "",
+        "rules": {
+          "maxLength": 4
+        }
+      },
+      {
+        "name": "show_debug_badge",
+        "type": "text",
+        "label": "Show Variant Badge",
+        "description": "Set to 'true' to show a small 'Variant A' / 'Variant B' tag in the corner (useful in staging). Leave blank or 'false' in production.",
+        "defaultValue": "false",
+        "rules": {
+          "maxLength": 6
+        }
+      },
+      {
+        "name": "a_title",
+        "type": "text",
+        "label": "Variant A \u2014 Title",
+        "defaultValue": "Hello from Variant A",
+        "rules": {
+          "required": true,
+          "maxLength": 120
+        }
+      },
+      {
+        "name": "a_subtitle",
+        "type": "text",
+        "label": "Variant A \u2014 Subtitle",
+        "defaultValue": "This is the original version of the message.",
+        "rules": {
+          "maxLength": 240
+        }
+      },
+      {
+        "name": "a_cta_label",
+        "type": "text",
+        "label": "Variant A \u2014 CTA Label",
+        "description": "Leave blank to hide the button.",
+        "defaultValue": "Learn more",
+        "rules": {
+          "maxLength": 40
+        }
+      },
+      {
+        "name": "a_cta_url",
+        "type": "text",
+        "label": "Variant A \u2014 CTA URL",
+        "defaultValue": "https://example.com/a"
+      },
+      {
+        "name": "b_title",
+        "type": "text",
+        "label": "Variant B \u2014 Title",
+        "defaultValue": "Hello from Variant B",
+        "rules": {
+          "required": true,
+          "maxLength": 120
+        }
+      },
+      {
+        "name": "b_subtitle",
+        "type": "text",
+        "label": "Variant B \u2014 Subtitle",
+        "defaultValue": "This is the alternative version of the message.",
+        "rules": {
+          "maxLength": 240
+        }
+      },
+      {
+        "name": "b_cta_label",
+        "type": "text",
+        "label": "Variant B \u2014 CTA Label",
+        "description": "Leave blank to hide the button.",
+        "defaultValue": "Get started",
+        "rules": {
+          "maxLength": 40
+        }
+      },
+      {
+        "name": "b_cta_url",
+        "type": "text",
+        "label": "Variant B \u2014 CTA URL",
+        "defaultValue": "https://example.com/b"
+      }
+    ]
+  },
+  "defaultConfig": {
+    "experiment_name": "untitled_experiment",
+    "split_percent_a": "50",
+    "persist_assignment": "session",
+    "force_variant": "",
+    "show_debug_badge": "false",
+    "a_title": "Hello from Variant A",
+    "a_subtitle": "This is the original version of the message.",
+    "a_cta_label": "Learn more",
+    "a_cta_url": "https://example.com/a",
+    "b_title": "Hello from Variant B",
+    "b_subtitle": "This is the alternative version of the message.",
+    "b_cta_label": "Get started",
+    "b_cta_url": "https://example.com/b"
+  }
+}
