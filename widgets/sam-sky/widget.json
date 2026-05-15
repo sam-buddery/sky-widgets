@@ -10,6 +10,16 @@
   "configuration": {
     "properties": [
       {
+        "name": "level",
+        "type": "text",
+        "label": "Level",
+        "description": "Number shown in the gold medallion. Leave blank to hide it.",
+        "defaultValue": "10",
+        "rules": {
+          "maxLength": 3
+        }
+      },
+      {
         "name": "badge_text",
         "type": "text",
         "label": "Badge",
@@ -25,7 +35,7 @@
         "type": "text",
         "label": "Heading",
         "description": "Main heading over the sky scene.",
-        "defaultValue": "Welcome to the Superusers Lounge",
+        "defaultValue": "Welcome Sky Super User",
         "rules": {
           "required": true,
           "maxLength": 80
@@ -56,7 +66,7 @@
         "type": "text",
         "label": "CTA URL",
         "description": "Where the button links to. Leave blank to hide the button.",
-        "defaultValue": "https://helpforum.sky.com/t5/Superuser-Lounge/ct-p/superusers"
+        "defaultValue": "https://sky-en-community.insided.com/p/superuser-lounge"
       },
       {
         "name": "sky_mode",
@@ -68,11 +78,12 @@
     ]
   },
   "defaultConfig": {
+    "level": "10",
     "badge_text": "SUPERUSER",
-    "greeting_title": "Welcome to the Superusers Lounge",
+    "greeting_title": "Welcome Sky Super User",
     "greeting_subtitle": "Thank you for sharing your knowledge and supporting fellow members of the Sky Community.",
     "cta_label": "Visit the Lounge",
-    "cta_url": "https://helpforum.sky.com/t5/Superuser-Lounge/ct-p/superusers",
+    "cta_url": "https://sky-en-community.insided.com/p/superuser-lounge",
     "sky_mode": "day"
   }
 }
